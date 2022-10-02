@@ -1,5 +1,6 @@
 import streamlit as st
 from src.pages.find_hym_page import quick_hymn_show_page
+from src.pages.slide_maker_page import slide_maker_page
 
 
 def about_page():
@@ -16,6 +17,7 @@ if __name__ == '__main__':
     options = [
         ('Sobre', about_page),
         ('Busca Rápida', quick_hymn_show_page),
+        ('Slide Maker', slide_maker_page)
     ]
 
     with st.sidebar:
