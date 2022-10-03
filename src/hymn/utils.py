@@ -16,9 +16,13 @@ def get_letter(path: str) -> str:
 	return out
 
 
-def format_options(alias_options: list[str], path_options: list[str]) -> list[tuple[str, str]]:
+@st.cache
+def format_options(path_options: list[str]) -> list[tuple[str, str]]:
+	options = [x if ' \ '.strip() not in x else x.replace(' \ '.strip(), '/') for x in path_options]
 
-	data = zip(alias_options, path_options)
+	clean_options = [x.split('/')[-1][:-5] for x in options]
+
+	data = zip(clean_options, path_options)
 
 	struct_options = map(
 		lambda x: (
@@ -43,11 +47,7 @@ def shown_search_bar(base_path: str) -> tuple[str, str]:
 
 	hymns_paths = glob.glob(base_path + '*.json')
 
-	options = [x if ' \ '.strip() not in x else x.replace(' \ '.strip(), '/') for x in hymns_paths]
-
-	clean_options = [x.split('/')[-1][:-5] for x in options]
-
-	formated_options = format_options(clean_options, hymns_paths)
+	formated_options = format_options(hymns_paths)
 
 	selectbox = st.selectbox(
 		'Quais são os hinos que você quer?',
@@ -58,6 +58,7 @@ def shown_search_bar(base_path: str) -> tuple[str, str]:
 	return selectbox
 
 
+@st.cache
 def prepare_txt_file(hymns: list[tuple[str, str]]) -> str:
 
 	letters = [

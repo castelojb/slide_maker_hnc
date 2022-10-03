@@ -12,13 +12,12 @@ def slide_maker_page():
 
 	hymn = shown_search_bar(base_path)
 	letter = get_letter(hymn[1])
-	st.text(letter)
+	st.code(letter, language='textile')
 
 	selected_hymns = get_empty_hymns()
 
 	if st.button('Adicionar Hino'):
 		selected_hymns.append(hymn)
-		# st.experimental_rerun()
 
 	st.subheader('Hinos Selecionados')
 	st.text(

@@ -16,7 +16,7 @@ if __name__ == '__main__':
 
     options = [
         ('Sobre', about_page),
-        ('Busca Rápida', quick_hymn_show_page),
+        # ('Busca Rápida', quick_hymn_show_page),
         ('Slide Maker', slide_maker_page)
     ]
 
