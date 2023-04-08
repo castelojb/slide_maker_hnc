@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: slides_maker
+  flyway:
+    image: flyway/flyway
+    command: -configFiles=./flyway.conf -url=jdbc:postgresql://db/slides_maker -user=postgres -password=postgres migrate
+    depends_on:
+      - db
+    volumes:
+      - ./db/migrations:/flyway/sql
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - flyway
+    environment:
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: slide_maker
+      DB_SCHEMAS: hymns_service
+      DB_HOST: localhost
+      DB_PORT: 5432
